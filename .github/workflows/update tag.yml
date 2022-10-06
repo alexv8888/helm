@@ -13,4 +13,18 @@ jobs:
       id: imgupd
       uses: mikefarah/yq@master
       with:
-        cmd: yq eval '.spec.template.spec.containers[0].image = "${{ github.event.client_payload.image }}"' -i ./wp-deploy.yml
+        cmd: yq eval '.spec.template.spec.containers[0].image = "${{ github.event.client_payload.image }}"' -i ./manifests/wp-deploy.yml
+        
+    - name: Test manifests
+      continue-on-error: true
+      uses: instrumenta/kubeval-action@master
+      with:
+        files: ./manifests
+        
+    - name: Slack Notification
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_USERNAME: "Github actions bot"
+        SLACK_COLOR: ${{ job.status }} 
+        SLACK_TITLE: "Task: changing tag to ${{ steps.tag.outputs.tag }} - ${{ job.status }}"
