@@ -1,0 +1,15 @@
+name: Repository Dispatch
+
+on:
+  repository_dispatch:
+    types: [new-image]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Update Image Version
+    - name: Cat
+      run: |
+        echo ${{ github.event.client_payload.image }}
