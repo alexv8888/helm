@@ -21,10 +21,14 @@ jobs:
       with:
         files: ./manifests
         
+    - uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: Change image name to ${{ github.event.client_payload.image }}
+        
     - name: Slack Notification
-      uses: rtCamp/action-slack-notify@v2
+      uses: 
       env:
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
         SLACK_USERNAME: "Github actions bot"
         SLACK_COLOR: ${{ job.status }} 
         SLACK_TITLE: "Task: changing tag to ${{ steps.tag.outputs.tag }} - ${{ job.status }}"
