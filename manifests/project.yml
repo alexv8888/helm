@@ -18,7 +18,7 @@ spec:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
   nfs:
-    path: /mnt/IT-Academy/nfs-data/sa2-21-22/alexv8288/front
+    path: /mnt/IT-Academy/nfs-data/sa2-21-22/alexv8288/wordpress
     server: 192.168.37.105
 
 #---
